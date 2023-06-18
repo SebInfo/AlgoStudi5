@@ -1,14 +1,27 @@
 import heapq
 
 def dijkstra(graph, start, end):
-    distances = {vertex: float('inf') for vertex in graph}
-    distances[start] = 0
-    previous_vertices = {vertex: None for vertex in graph}
+    # On définit un dictionnaire pour les distances les plus courtes avec le point de départ
+    # on initialise les distances à inf
+    distances = {sommets: float('inf') for sommets in graph}
+    print ("Dictionnaire des distances",distances)
 
+    # En partant du premier sommet de notre chemin 
+    # La distance avec lui même est de 0
+    distances[start] = 0
+
+    # On définit un dictionnaire pour stocker les nœuds précédents sur le chemin le plus court 
+    # depuis le point de départ. Initialisez-les tous à null.
+    precedents = {sommets: None for sommets in graph}
+    print ("Dictionnaire des precedents",precedents)
+
+    print ("J'ajoute le noeud : (0, '",start,"')")
     heap = [(0, start)]
 
     while heap:
-        current_distance, current_vertex = heapq.heappop(heap)
+        noeud = heapq.heappop(heap)
+        print ("Je prend le noeud ",noeud)
+        current_distance, current_vertex = noeud
 
         if current_vertex == end:
             break
@@ -21,14 +34,17 @@ def dijkstra(graph, start, end):
 
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
-                previous_vertices[neighbor] = current_vertex
-                heapq.heappush(heap, (distance, neighbor))
+                precedents[neighbor] = current_vertex
+                print ("Dictionnaire des precedents",precedents)
+                element = (distance, neighbor)
+                print ("J'ajoute le noeud :",element)
+                heapq.heappush(heap, element)
 
     path = []
     current_vertex = end
     while current_vertex != start:
         path.insert(0, current_vertex)
-        current_vertex = previous_vertices[current_vertex]
+        current_vertex = precedents[current_vertex]
     path.insert(0, start)
 
     return path, distances[end]
