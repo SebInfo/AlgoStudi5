@@ -1,0 +1,29 @@
+fonction Dijkstra(graphe, depart, arrivee):
+    créer un ensemble vide nommé noeudsVisites
+    créer un dictionnaire vide nommé distances
+    créer un dictionnaire vide nommé predecesseurs
+    
+    initialiser distances[depart] à 0
+    
+    tant que arrivee n'est pas dans noeudsVisites:
+        courant = le noeud avec la plus petite distance depuis depart qui n'est pas dans noeudsVisites
+        
+        ajouter courant à noeudsVisites
+        
+        pour chaque voisin de courant:
+            si voisin n'est pas dans noeudsVisites:
+                calculer distanceTentative = distances[courant] + poids(courant, voisin)
+                
+                si distanceTentative < distances[voisin]:
+                    mettre à jour distances[voisin] avec distanceTentative
+                    mettre à jour predecesseurs[voisin] avec courant
+    
+    // Reconstruction du plus court chemin
+    chemin = liste vide
+    courant = arrivee
+    
+    tant que courant n'est pas null:
+        ajouter courant au début de chemin
+        courant = predecesseurs[courant]
+    
+    retourner chemin
