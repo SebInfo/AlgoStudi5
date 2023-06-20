@@ -13,12 +13,16 @@ def dijkstra(graph, start, end):
     # On définit un dictionnaire pour stocker les nœuds précédents sur le chemin le plus court 
     # depuis le point de départ. Initialisez-les tous à null.
     precedents = {sommets: None for sommets in graph}
-    print ("Dictionnaire des precedents",precedents)
+    print ("Dictionnaire des précedents",precedents)
 
     print ("J'ajoute le noeud : (0, '",start,"')")
+
+    # création de notre file de priorité
     heap = [(0, start)]
 
+    # tant que la file n'est pas vide
     while heap:
+        # on prend le meilleur élément
         noeud = heapq.heappop(heap)
         print ("Je prend le noeud ",noeud)
         current_distance, current_vertex = noeud
@@ -33,9 +37,12 @@ def dijkstra(graph, start, end):
             distance = current_distance + weight
 
             if distance < distances[neighbor]:
+                # MAJ des dictionnaires 
                 distances[neighbor] = distance
                 precedents[neighbor] = current_vertex
                 print ("Dictionnaire des precedents",precedents)
+
+                # ajout de notre élément dans notre file de priorité
                 element = (distance, neighbor)
                 print ("J'ajoute le noeud :",element)
                 heapq.heappush(heap, element)
